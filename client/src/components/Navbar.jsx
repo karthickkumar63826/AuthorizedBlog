@@ -3,23 +3,26 @@ import "../styles/Navbar.css";
 import { SiMicrodotblog } from "react-icons/si";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
-  const [user, setUser] = useState("");
-
+const Navbar = ({ username }) => {
   return (
-    <div className="navbar">
+    <div className="main-navbar">
       <div className="title">
-        <h1>Blog App</h1>
+        <h1>Blog </h1>
+        <div className="navbar-icon">
+          <Link to="/">
+            <SiMicrodotblog size={30} />
+          </Link>
+        </div>
       </div>
       <div className="navbar-menu">
         <ul>
-          {user && <li>Welcome {user}</li>}
+          {username && <li>Welcome {username}</li>}
           <li>
             <Link to="/" className="custom-link">
               Home
             </Link>
           </li>
-          {user && (
+          {username && (
             <li>
               <Link to="/logout" className="custom-link">
                 Logout
@@ -31,16 +34,7 @@ const Navbar = () => {
               Login
             </Link>
           </li>
-          <li>
-            <Link to="/register" className="custom-link">
-              Register
-            </Link>
-          </li>
         </ul>
-      </div>
-
-      <div className="navbar-icon">
-        <SiMicrodotblog size={30} />
       </div>
     </div>
   );

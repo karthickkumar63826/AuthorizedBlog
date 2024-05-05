@@ -1,9 +1,15 @@
-.navbar {
+.main-navbar {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
   border-bottom: 1px solid black;
   box-shadow: 1px 0 5px black;
+  padding: 10px 100px;
+}
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .title h1 {
@@ -14,7 +20,7 @@
   text-transform: uppercase;
 }
 
-.navbar-menu ul {
+ul {
   display: flex;
   align-items: center;
   justify-content: center;

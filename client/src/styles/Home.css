@@ -1,0 +1,37 @@
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  height: 80vh;
+}
+
+.home h1 {
+  font-size: 54px;
+  font-weight: 600;
+  color: #323232;
+}
+
+.home p {
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.home-btn {
+  font-size: 24px;
+  font-weight: 400;
+  color: #323232;
+  padding: 10px 20px;
+  background-color: white;
+  border-radius: 25px;
+  outline: none;
+  box-shadow: 2px 2px 5px #323232;
+  cursor: pointer;
+  transition: all .1s ease;
+}
+
+.home-btn:active {
+  color: white;
+  background-color: #323232;
+}
