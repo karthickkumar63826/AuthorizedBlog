@@ -26,9 +26,22 @@
   padding: 20px 40px;
 }
 
+.created {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-.created{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.blog-card-btn {
+  display: flex;
+  gap: 10px;
+  padding: 20px 40px;
+}
+
+.Link-btn {
+  color: white;
+  text-decoration: none;
+}
+.Link-btn:hover{
+  color: #323232;
 }

@@ -3,7 +3,7 @@ import BlogCard from "./BlogCard";
 import blogService from "../services/blogService";
 import "../styles/blog.css";
 
-const Blog = () => {
+const Blog = ({ setBlogDetails, setIsEditable }) => {
   const [blogs, setBlogs] = useState([]);
 
   const showBlogs = async () => {
@@ -24,7 +24,14 @@ const Blog = () => {
     <div className="main-page">
       <div className="blog-list">
         {blogs ? (
-          blogs.map((blog) => <BlogCard blog={blog} />)
+          blogs.map((blog) => (
+            <BlogCard
+              key={blog._id}
+              blog={blog}
+              setBlogDetails={setBlogDetails}
+              setIsEditable={setIsEditable}
+            />
+          ))
         ) : (
           <h1>No blogs created </h1>
         )}

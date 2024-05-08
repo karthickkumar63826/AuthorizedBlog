@@ -31,23 +31,60 @@ const findBlogByUser = async (req, res, next) => {
   }
 };
 
-const updateBlog = async (req, res, next) => {
+const findBlogById = async (req, res, next) => {
   try {
-    const user = req.user;
-    const author = await User.findOne({ email: user.email });
-    if (!author) {
-      res.status(401).json({ msg: "user not found " });
-    }
-    const updatedBlog = req.body;
+    blogId = req.params.id;
+    const findedBlog = await Blog.findOne({ _id: blogId });
+    res.status(201).json({ findedBlog });
+  } catch (error) {
+    next(new CustomeError(error.message));
+  }
+};
 
-    const updatedNewBlog = await Blog.updateOne(
-      { author: author._id },
+const updateBlog = async (req, res, next) => {
+  console.log("updated blog page");
+  try {
+    const _id = req.params.id;
+    const updatedBlog = req.body;
+    const updatedNewBlog = await Blog.findByIdAndUpdate(
+      { _id: _id },
       { $set: { updatedBlog } }
     );
+    console.log("blog is updated successfully");
     res.status(201).json({ msg: "blog updated successfully", updatedNewBlog });
-  } catch (error) {
+  } catch (err) {
     next(new CustomeError(err.message, 500));
   }
 };
 
-module.exports = { createBlog, findBlogByUser, updateBlog };
+const deleteBlog = async (req, res, next) => {
+  try {
+    const _id = req.params.id;
+    const deletedBlog = await Blog.findByIdAndDelete(_id);
+    res
+      .status(200)
+      .json({ message: "Blog deleted successfully",  blog : deletedBlog });
+  } catch (err) {
+    next(new CustomeError(err.message, err.status || 500));
+  }
+};
+
+const getAllBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find().populate('author', 'username');
+    console.log(blogs);
+    res.status(201).json(blogs);
+  } catch (err) {
+    console.log(err);
+    next(new CustomeError(err.message, 500));
+  }
+};
+
+module.exports = {
+  createBlog,
+  findBlogByUser,
+  updateBlog,
+  findBlogById,
+  deleteBlog,
+  getAllBlogs,
+};

@@ -2,7 +2,7 @@ const CustomeError = require("./customeError");
 
 const ErrorHandler = (err, req, res, next) => {
   if (err instanceof CustomeError) {
-    res.status(err.statusCode).json({ msg: err.message });
+    res.status(err.statusCode).json({ message: err.message });
   }
   res.status(500).json({ msg: "Internal server error" });
 };

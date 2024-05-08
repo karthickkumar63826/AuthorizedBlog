@@ -1,8 +1,26 @@
 import React, { useEffect } from "react";
 import "../styles/blog.css";
+import { Link, useNavigate } from "react-router-dom";
+import blogService from "../services/blogService";
 
-const BlogCard = ({ blog }) => {
+const BlogCard = ({ blog, setBlogDetails, setIsEditable }) => {
   const username = localStorage.getItem("userData");
+  const navigate = useNavigate();
+
+  const handleUpdate = (blog) => {
+    setIsEditable(true);
+    setBlogDetails(blog);
+  };
+
+  const handleDelete = async (blog) => {
+    try {
+      const response = await blogService.deleteBlog(blog);
+      console.log(response);
+      alert("Blog is deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -20,8 +38,15 @@ const BlogCard = ({ blog }) => {
           </div>
         </div>
         <div className="blog-card-btn">
-          <button>Update</button>
-          <button>Delete</button>
+          <Link to="/updateblog" className="Link-btn">
+            <button className="blog-btn" onClick={() => handleUpdate(blog)}>
+              Update
+            </button>
+          </Link>
+
+          <button className="blog-btn" onClick={() => handleDelete(blog)}>
+            Delete
+          </button>
         </div>
       </div>
     </>

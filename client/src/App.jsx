@@ -11,6 +11,8 @@ import Logout from "./components/logout";
 
 const App = () => {
   const [username, setUsername] = useState("");
+  const [blogDetails, setBlogDetails] = useState({});
+  const [isEditable, setIsEditable] = useState(false);
   useEffect(() => {
     const username = localStorage.getItem("userData");
     setUsername(username);
@@ -23,8 +25,29 @@ const App = () => {
           <Route path="/" element={<Home username={username} />} />
           <Route path="/login" element={<Login setUsername={setUsername} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/createblog" element={<CreateBlog />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route
+            path="/createblog"
+            element={
+              <CreateBlog
+                blogDetails={blogDetails}
+                isEditable={isEditable}
+                setIsEditable={setIsEditable}
+              />
+            }
+          />
+          <Route
+            path="/updateblog"
+            element={<CreateBlog blogDetails={blogDetails} />}
+          />
+          <Route
+            path="/blog"
+            element={
+              <Blog
+                setBlogDetails={setBlogDetails}
+                setIsEditable={setIsEditable}
+              />
+            }
+          />
           <Route
             path="/logout"
             element={<Logout setUsername={setUsername} />}

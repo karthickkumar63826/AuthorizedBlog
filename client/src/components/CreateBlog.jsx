@@ -1,27 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import blogService from "../services/blogService";
 import "../styles/CreateBlog.css";
 
-const CreateBlog = () => {
+const CreateBlog = ({ blogDetails, isEditable, setIsEditable }) => {
   const initialBlog = { title: "", content: "" };
   const [blog, setBlog] = useState(initialBlog);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setBlog({ ...blog, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    console.log(blogDetails);
+    if (blogDetails) {
+      const { title, content } = blogDetails;
+      const updateDetails = { title: title, content: content };
+      setBlog(updateDetails);
+    }
+  }, []);
+
+  const createBlog = async (blog) => {
     try {
       const response = await blogService.createBlog(blog);
       console.log(response);
       alert("Blog created successfully");
-    } catch (error) {
-      alert("Please enter proper content");
-      console.log(error);
+      setBlog(initialBlog)
+    } catch (err) {
+      console.log(err);
     }
+  };
+
+  const updateBlog = async (blog) => {
+    try {
+      const response = await blogService.updateBlog(blog);
+      console.log(response);
+      setIsEditable(false);
+      alert("blog is updated successfully");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    isEditable ? updateBlog(blog) : createBlog(blog);
   };
   return (
     <>
@@ -51,7 +74,9 @@ const CreateBlog = () => {
                 />
               </div>
               <br />
-              <button type="submit" className="blog-btn">Publish</button>
+              <button type="submit" className="blog-btn">
+                {isEditable ? "Update" : "Publish"}
+              </button>
             </form>
           </div>
         </div>
