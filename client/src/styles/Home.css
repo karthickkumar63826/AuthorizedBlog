@@ -28,10 +28,12 @@
   outline: none;
   box-shadow: 2px 2px 5px #323232;
   cursor: pointer;
-  transition: all .1s ease;
+  transition: all .3s ease;
 }
 
-.home-btn:active {
+.home-btn:hover {
   color: white;
   background-color: #323232;
+  border: none;
+  outline: none;
 }

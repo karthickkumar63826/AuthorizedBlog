@@ -6,6 +6,7 @@ const hashPassword = require("../Middlewares/hashPassword");
 
 const register = async (req, res, next) => {
   try {
+    console.log("In register");
     req.body.role = "user";
     req.body.password = await hashPassword(req.body.password);
     const userDetails = await User.create(req.body);
@@ -18,7 +19,9 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
     const user = await User.findOne({ email: email });
+    console.log(user);
     if (!user) res.status(401).json({ msg: "User is not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -28,7 +31,7 @@ const login = async (req, res, next) => {
       const token = JWT.sign(
         { email, username, role },
         process.env.JWT_SECRETKEY,
-        { expiresIn: "300s" }
+        { expiresIn: "3d" }
       );
       res.status(201).json(token);
     }

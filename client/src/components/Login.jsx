@@ -13,9 +13,9 @@ const Login = ({ setUsername }) => {
     setLoginDetails({ ...loginDetails, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, user) => {
     e.preventDefault();
-    validateUser(loginDetails);
+    validateUser(user);
     setLoginDetails({ email: "", password: "" });
   };
 
@@ -29,12 +29,10 @@ const Login = ({ setUsername }) => {
 
   const validateUser = async (user) => {
     try {
+      console.log(user);
       const response = await userService.login(user);
-      console.log(response);
-      console.log(response.data);
       const token = response.data;
 
-      console.log(parseJwt(token));
       let userData = parseJwt(token);
 
       localStorage.setItem("token", JSON.stringify(token));
@@ -43,7 +41,16 @@ const Login = ({ setUsername }) => {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log("An error occurred:", error);
+
+      // Display a user-friendly error message
+      if (error.code === "ERR_NETWORK") {
+        alert(
+          "Network error: Please check your internet connection and try again."
+        );
+      } else {
+        alert("An error occurred: " + error.message);
+      }
     }
   };
   return (
@@ -51,7 +58,11 @@ const Login = ({ setUsername }) => {
       <div className="login-page">
         <div className="login">
           <h1>Login Page</h1>
-          <form className="login-form" action="" onSubmit={handleSubmit}>
+          <form
+            className="login-form"
+            action=""
+            onSubmit={(e) => handleSubmit(e, loginDetails)}
+          >
             <div className="inputs">
               <label htmlFor="email">Email </label>
               <input
@@ -73,7 +84,9 @@ const Login = ({ setUsername }) => {
               />
             </div>
 
-            <button type="submit" className="login-btn">Login </button>
+            <button type="submit" className="login-btn">
+              Login{" "}
+            </button>
             <div className="newaccount">
               <p>Create new account </p>
               <p>

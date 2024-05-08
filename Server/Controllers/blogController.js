@@ -9,12 +9,11 @@ const createBlog = async (req, res, next) => {
     let author = await User.findOne({ email: user.email });
     blog.author = author;
     const newBlog = await Blog.create(blog);
-    res.status(200).json({ msg: "blog created successfully", blog: newBlog });
+    res.status(200).json({ blog: newBlog });
   } catch (err) {
     next(new CustomeError(err.message, 500));
   }
 };
-
 
 const findBlogByUser = async (req, res, next) => {
   try {
@@ -32,4 +31,23 @@ const findBlogByUser = async (req, res, next) => {
   }
 };
 
-module.exports = { createBlog, findBlogByUser };
+const updateBlog = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const author = await User.findOne({ email: user.email });
+    if (!author) {
+      res.status(401).json({ msg: "user not found " });
+    }
+    const updatedBlog = req.body;
+
+    const updatedNewBlog = await Blog.updateOne(
+      { author: author._id },
+      { $set: { updatedBlog } }
+    );
+    res.status(201).json({ msg: "blog updated successfully", updatedNewBlog });
+  } catch (error) {
+    next(new CustomeError(err.message, 500));
+  }
+};
+
+module.exports = { createBlog, findBlogByUser, updateBlog };

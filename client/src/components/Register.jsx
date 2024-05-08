@@ -4,7 +4,7 @@ import userService from "../services/userService";
 import "../styles/Register.css";
 
 const Register = () => {
-  const initialState = { username: "", email: "", password: "" };
+  const initialState = {};
   const [registerDetails, setRegisterDetails] = useState(initialState);
   const navigate = useNavigate();
 

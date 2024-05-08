@@ -1,0 +1,48 @@
+.blog {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1 {
+  font-size: 54px;
+  color: #323232;
+  font-weight: 500;
+}
+
+.blog-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 2px solid #323232;
+  outline: none;
+  border-radius: 10px;
+}
+
+textarea {
+  padding: 20px;
+  border: 2px solid #323232;
+  border-radius: 15px;
+}
+
+.blog-btn {
+  background: #323232;
+  color: white;
+  width: 120px;
+  height: 50px;
+  padding: 5px 10px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}

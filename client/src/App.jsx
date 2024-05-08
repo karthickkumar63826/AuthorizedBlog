@@ -4,12 +4,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateBlog from "./components/CreateBlog";
 import Blog from "./components/Blog";
+import Logout from "./components/logout";
 
 const App = () => {
   const [username, setUsername] = useState("");
+  useEffect(() => {
+    const username = localStorage.getItem("userData");
+    setUsername(username);
+  }, []);
   return (
     <>
       <BrowserRouter>
@@ -20,6 +25,10 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/createblog" element={<CreateBlog />} />
           <Route path="/blog" element={<Blog />} />
+          <Route
+            path="/logout"
+            element={<Logout setUsername={setUsername} />}
+          />
         </Routes>
       </BrowserRouter>
     </>
