@@ -12,7 +12,7 @@ import Logout from "./components/logout";
 const App = () => {
   const [username, setUsername] = useState("");
   const [blogDetails, setBlogDetails] = useState({});
-  const [isEditable, setIsEditable] = useState(false);
+
   useEffect(() => {
     const username = localStorage.getItem("userData");
     setUsername(username);
@@ -30,8 +30,7 @@ const App = () => {
             element={
               <CreateBlog
                 blogDetails={blogDetails}
-                isEditable={isEditable}
-                setIsEditable={setIsEditable}
+                setBlogDetails={setBlogDetails}
               />
             }
           />
@@ -41,12 +40,7 @@ const App = () => {
           />
           <Route
             path="/blog"
-            element={
-              <Blog
-                setBlogDetails={setBlogDetails}
-                setIsEditable={setIsEditable}
-              />
-            }
+            element={<Blog setBlogDetails={setBlogDetails} />}
           />
           <Route
             path="/logout"

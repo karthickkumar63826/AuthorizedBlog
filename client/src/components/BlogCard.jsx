@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/blog.css";
 import { Link, useNavigate } from "react-router-dom";
 import blogService from "../services/blogService";
 
-const BlogCard = ({ blog, setBlogDetails, setIsEditable }) => {
+const BlogCard = ({ blog, setBlogDetails }) => {
   const username = localStorage.getItem("userData");
   const navigate = useNavigate();
 
   const handleUpdate = (blog) => {
-    setIsEditable(true);
     setBlogDetails(blog);
   };
 
@@ -16,6 +15,7 @@ const BlogCard = ({ blog, setBlogDetails, setIsEditable }) => {
     try {
       const response = await blogService.deleteBlog(blog);
       console.log(response);
+      navigate("/");
       alert("Blog is deleted successfully");
     } catch (error) {
       console.log(error);

@@ -18,6 +18,7 @@ const AuthMiddleware = async (req, res, next) => {
     req.user = { email, username, role };
     next();
   } catch (error) {
+    console.log(error);
     next(new CustomeError(error.message, 500));
   }
 };

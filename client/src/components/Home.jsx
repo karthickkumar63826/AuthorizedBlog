@@ -6,6 +6,7 @@ const Home = ({ username }) => {
   const navigate = useNavigate();
 
   const handleCreateBlog = () => {
+    
     username ? navigate("/createblog") : navigate("/login");
   };
 

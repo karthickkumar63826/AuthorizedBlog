@@ -45,14 +45,17 @@ const updateBlog = async (req, res, next) => {
   console.log("updated blog page");
   try {
     const _id = req.params.id;
-    const updatedBlog = req.body;
-    const updatedNewBlog = await Blog.findByIdAndUpdate(
+    const { title, content } = req.body;
+    console.log(_id, title, content);
+    await Blog.findByIdAndUpdate(
       { _id: _id },
-      { $set: { updatedBlog } }
+      { $set: { title, content, updatedAt: Date.now() } }
     );
     console.log("blog is updated successfully");
-    res.status(201).json({ msg: "blog updated successfully", updatedNewBlog });
+    res.status(201).json({ msg: "blog updated successfully" });
   } catch (err) {
+    console.log(err);
+    console.log(err.mrssage);
     next(new CustomeError(err.message, 500));
   }
 };
@@ -63,15 +66,16 @@ const deleteBlog = async (req, res, next) => {
     const deletedBlog = await Blog.findByIdAndDelete(_id);
     res
       .status(200)
-      .json({ message: "Blog deleted successfully",  blog : deletedBlog });
+      .json({ message: "Blog deleted successfully", blog: deletedBlog });
   } catch (err) {
     next(new CustomeError(err.message, err.status || 500));
   }
 };
 
 const getAllBlogs = async (req, res, next) => {
+  console.log("getallblogs");
   try {
-    const blogs = await Blog.find().populate('author', 'username');
+    const blogs = await Blog.find();
     console.log(blogs);
     res.status(201).json(blogs);
   } catch (err) {

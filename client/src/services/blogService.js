@@ -21,9 +21,10 @@ const viewBlog = async () => {
   });
 };
 
-const updateBlog = async (blog) => {
+const updateBlog = async (blog, _id) => {
   console.log("This is an update service");
-  const { _id } = blog;
+  console.log(blog);
+  console.log(_id);
   const token = localStorage.getItem("token");
   return await axios.put(`http://localhost:8000/blog/${_id}`, blog, {
     headers: {

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import blogService from "../services/blogService";
 import "../styles/CreateBlog.css";
+import { useNavigate } from "react-router-dom";
 
-const CreateBlog = ({ blogDetails, isEditable, setIsEditable }) => {
-  const initialBlog = { title: "", content: "" };
-  const [blog, setBlog] = useState(initialBlog);
-
+const CreateBlog = ({ blogDetails, setBlogDetails }) => {
+  const initialState = { title: "", content: "" };
+  const [blog, setBlog] = useState(initialState);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBlog({ ...blog, [name]: value });
@@ -23,20 +24,21 @@ const CreateBlog = ({ blogDetails, isEditable, setIsEditable }) => {
   const createBlog = async (blog) => {
     try {
       const response = await blogService.createBlog(blog);
-      console.log(response);
+      console.log(response.data.blog);
       alert("Blog created successfully");
-      setBlog(initialBlog)
+      setBlog(initialState);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const updateBlog = async (blog) => {
+  const updateBlog = async (blog, _id) => {
     try {
-      const response = await blogService.updateBlog(blog);
+      const response = await blogService.updateBlog(blog, _id);
       console.log(response);
-      setIsEditable(false);
       alert("blog is updated successfully");
+      setBlogDetails({});
+      navigate("/blog");
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +46,7 @@ const CreateBlog = ({ blogDetails, isEditable, setIsEditable }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    isEditable ? updateBlog(blog) : createBlog(blog);
+    blogDetails._id ? updateBlog(blog, blogDetails._id) : createBlog(blog);
   };
   return (
     <>
@@ -75,7 +77,7 @@ const CreateBlog = ({ blogDetails, isEditable, setIsEditable }) => {
               </div>
               <br />
               <button type="submit" className="blog-btn">
-                {isEditable ? "Update" : "Publish"}
+                {blogDetails._id ? "Update" : "Publish"}
               </button>
             </form>
           </div>
